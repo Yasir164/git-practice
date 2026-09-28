@@ -93,3 +93,9 @@ li .delete {
 }
 
 li p { margin: 0; white-space: pre-wrap; }
+
+.count {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
