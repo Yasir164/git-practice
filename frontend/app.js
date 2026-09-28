@@ -8,6 +8,7 @@ function showError(message) {
 }
 
 function render(notes) {
+  document.getElementById("count").textContent = `${notes.length} note${notes.length === 1 ? "" : "s"}`;
   list.innerHTML = "";
   if (notes.length === 0) {
     list.innerHTML = '<li class="empty">No notes yet — add the first one.</li>';
