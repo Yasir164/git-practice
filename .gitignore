@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local data (each person keeps their own notes)
+backend/notes.json
+
+# Editors / OS
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
