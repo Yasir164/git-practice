@@ -1,17 +1,29 @@
 const list = document.getElementById("notes");
 const form = document.getElementById("note-form");
 const errorBox = document.getElementById("error");
+const search = document.getElementById("search");
+let allNotes = [];
 
 function showError(message) {
   errorBox.textContent = message;
   errorBox.hidden = !message;
 }
 
-function render(notes) {
-  document.getElementById("count").textContent = `${notes.length} note${notes.length === 1 ? "" : "s"}`;
+function render() {
+  const query = search.value.trim().toLowerCase();
+  const notes = query
+    ? allNotes.filter((n) => `${n.text} ${n.author}`.toLowerCase().includes(query))
+    : allNotes;
+
+  const total = `${allNotes.length} note${allNotes.length === 1 ? "" : "s"}`;
+  document.getElementById("count").textContent = query ? `${notes.length} of ${total}` : total;
+
   list.innerHTML = "";
   if (notes.length === 0) {
-    list.innerHTML = '<li class="empty">No notes yet — add the first one.</li>';
+    const empty = document.createElement("li");
+    empty.className = "empty";
+    empty.textContent = query ? `No notes match "${search.value.trim()}".` : "No notes yet — add the first one.";
+    list.append(empty);
     return;
   }
   for (const note of notes) {
@@ -37,7 +49,8 @@ function render(notes) {
 
 async function loadNotes() {
   const res = await fetch("/api/notes");
-  render(await res.json());
+  allNotes = await res.json();
+  render();
 }
 
 async function deleteNote(id) {
@@ -63,5 +76,7 @@ form.addEventListener("submit", async (event) => {
   document.getElementById("text").value = "";
   loadNotes();
 });
+
+search.addEventListener("input", render);
 
 loadNotes();
