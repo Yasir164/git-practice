@@ -55,6 +55,8 @@ input, textarea {
 
 textarea { min-height: 80px; resize: vertical; }
 
+#search { width: 100%; margin-bottom: 8px; }
+
 button {
   font: inherit;
   cursor: pointer;
